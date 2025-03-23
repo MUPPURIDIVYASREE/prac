@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    tools { 
+        maven 'maven'  
+    }
+
+    stages {
+        stage('SCM') {
+            steps {
+                echo 'Hello Clone stage'
+                git credentialsId: '7022912d-26a2-45a2-8291-85f45b7c37da', url: 'https://github.com/MUPPURIDIVYASREE/maven-project1.git'
+                }
+        }
+        stage('Build') {
+            steps {
+                echo 'Hello Build'
+                sh 'mvn clean install'
+            }
+        }
+        stage('Dev-Deploy') {
+            steps {
+                echo 'Hello Docker Deploy'
+                deploy adapters: [tomcat9(credentialsId: '240d5307-6705-4e71-9cb3-298a0ea38030', path: '', url: 'http://localhost:8081/')], contextPath: 'devops108.war', war: '**/*.war'
+                  }
+        }
+}
+}
