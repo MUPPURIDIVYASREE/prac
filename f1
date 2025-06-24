@@ -1,1 +1,4 @@
 https://chatgpt.com/share/68594e66-bd94-800b-9b49-31fe88329e62
+def logout_view(request):
+    logout(request)
+    return redirect('https://accounts.google.com/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:8000/')
